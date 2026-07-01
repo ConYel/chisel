@@ -90,6 +90,7 @@ jobs:
             [ -n "$goarm" ] && build_args="$build_args --build-arg GOARM=$goarm"
             echo "=== Building $tag (GOARCH=$goarch GOARM=$goarm) ==="
             docker build $build_args --tag $IMAGE:$tag --file .github/Dockerfile .
+            .github/verify-binary.sh "$goarch" "$IMAGE:$tag" "$VERSION"
             docker push $IMAGE:$tag
             ALL_TAGS="$ALL_TAGS $IMAGE:$tag"
           done
